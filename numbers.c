@@ -1,18 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-
-#define MAX_STRING 100
-
-typedef struct { /*store the next number digits*/
-    int tens;
-    int ones;
-}Num;
-
-char * read_next (Num *, char *); /*read next number, store results on struct and return string pointer */
-void print_next (Num , FILE *); /*get the current number and print it to the output location*/
-
+#include "numbers.h"
 
 int main (int argc, char *argv[]) {
     
@@ -60,7 +46,7 @@ int main (int argc, char *argv[]) {
         print_next (next_num, out); /*call function to print current number as words*/
         if (!p) break;
     }
-    
+return (0);   
 }
 
 /* The function get Num struct pointer and char pointer, 
@@ -77,7 +63,7 @@ char * read_next (Num *next, char *p){
             ;
         --p;
         if (c==EOF || c=='\n') { /*exit if EOF/EOL reched*/
-            return NULL;
+            exit(0);
         }
         while (isdigit(temp_str[i] = c = *p)) { /*keep reading numbers and store at temp_str*/
             i++;
@@ -86,11 +72,14 @@ char * read_next (Num *next, char *p){
         temp_num = atoi (temp_str); /*convert the temp_str to int*/
         next->ones = (int) temp_num%10; /*calculate and store the ones digit*/
         next->tens = (int) ((temp_num-next->ones)%100)/10; /*calculate and store the tens digit*/
+        
+        while (((c = *p) == ' ' || c=='\t') ) /*keep skipping next whitespaces*/
+            p++;
 
         if (c==EOF || c=='\n') { /*exit if EOF/EOL */
             return NULL;
         }
-        else if (c==' ') return p;  /*return pointer for next number*/
+        else if (isdigit (c)) return p;  /*return pointer for next number*/
         else { /*send error if input is invalid*/
             fprintf (stderr,"\nInvalid input\n");
             exit (0);
