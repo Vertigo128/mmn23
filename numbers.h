@@ -3,7 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define MAX_STRING 100
+#define MAX_STRING 100 /*maximum allowed string length*/
 
 typedef struct { /*store the next number digits*/
     int tens;
